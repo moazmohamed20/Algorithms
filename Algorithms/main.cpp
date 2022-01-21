@@ -39,6 +39,18 @@ public:
 		}
 	}
 
+	void insertionSort() {
+		for (int i = 1; i < size; i++) {
+			// If Current Index Is Not In Right Position
+			if (mArray[i] < mArray[i - 1]) {
+				// Move It Back To Its Right Position
+				for (int j = i; j > 0; j--)
+					if (mArray[j] < mArray[j - 1])
+						swap(j, j - 1);
+			}
+		}
+	}
+
 };
 
 int main() {
@@ -52,7 +64,7 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.selectionSort();
+	customArray.insertionSort();
 
 	cout << "\n\nRandom Array After Sorting:\n";
 	for (int i = 0; i < 10; i++)
