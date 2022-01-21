@@ -2,10 +2,17 @@
 
 using namespace std;
 
+struct Index {
+	int value;
+	int index;
+};
+
 class CustomArray {
 private:
 	int size;
 	int *mArray;
+	int indexSize;
+	Index *mIndex;
 
 	void swap(int a, int b) {
 		int temp = mArray[a];
@@ -181,6 +188,35 @@ public:
 		return -1;
 	}
 
+	void createIndex(int groupSize) {
+		indexSize = size / groupSize;
+		mIndex = new Index[indexSize];
+		for (int i = 0; i < indexSize; i++) {
+			mIndex[i].index = i * groupSize;
+			mIndex[i].value = mArray[i * groupSize];
+		}
+	}
+
+	int indexedSearch(int value) {
+		// Find Where The Value Is Grouped
+		int i = 0;
+		while (value > mIndex[i].value && i < indexSize)
+			i++;
+
+		// Set Search Range: End
+		int lastIndex = 0;
+		if (value == mIndex[i].value)		return mIndex[i].index;
+		else if (value < mIndex[i].value)	lastIndex = mIndex[i].index;
+		else if (value > mIndex[i].value)	lastIndex = indexSize;
+
+		//  Search For The Value In The Range
+		for (int j = mIndex[i - 1].index; j < lastIndex; j++)
+			if (mArray[j] == value)
+				return j;
+
+		return -1;
+	}
+
 };
 
 int main() {
@@ -200,8 +236,9 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	cout << "\n\nNumber (25) At Index: " << customArray.sequentialSearch(25);
-	cout << "\nNumber (34) At Index: " << customArray.sequentialSearch(34);
+	customArray.createIndex(3);
+	cout << "\n\nNumber (25) At Index: " << customArray.indexedSearch(25);
+	cout << "\nNumber (34) At Index: " << customArray.indexedSearch(34);
 
 	getchar();
 	return 0;
