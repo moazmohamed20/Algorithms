@@ -51,6 +51,18 @@ public:
 		}
 	}
 
+	void bubbleSort() {
+		int lastIndex = size - 1;
+		while (lastIndex > 0) {
+
+			for (int i = 0; i < lastIndex; i++)
+				if (mArray[i] > mArray[i + 1])
+					swap(i, i + 1);
+
+			lastIndex--;
+		}
+	}
+
 };
 
 int main() {
@@ -64,7 +76,7 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.insertionSort();
+	customArray.bubbleSort();
 
 	cout << "\n\nRandom Array After Sorting:\n";
 	for (int i = 0; i < 10; i++)
