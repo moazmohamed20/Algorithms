@@ -13,6 +13,29 @@ private:
 		mArray[b] = temp;
 	}
 
+	int locatePivot(int first, int last) {
+		int i = first;
+		int j = last;
+
+		while (i < j)
+		{
+			// Find Big Value From Left
+			while (mArray[i] <= mArray[first])
+				i++;
+			// Find Small Value From Right
+			while (mArray[j] > mArray[first])
+				j--;
+			// If The [Small Value In Left] And [Big Value In Righ] Swap Them
+			if (i < j)
+				swap(i, j);
+		}
+		// Move The Pivot From First To Center
+		swap(first, j);
+
+		// Return Pivot Position
+		return j;
+	}
+
 public:
 	CustomArray(int initialSize = 100) {
 		size = 0;
@@ -63,6 +86,14 @@ public:
 		}
 	}
 
+	void quickSort(int first, int last) {
+		if (first < last) {
+			int pivot = locatePivot(first, last);
+			quickSort(first, pivot);
+			quickSort(pivot + 1, last);
+		}
+	}
+
 };
 
 int main() {
@@ -76,7 +107,7 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.bubbleSort();
+	customArray.quickSort(0, 9);
 
 	cout << "\n\nRandom Array After Sorting:\n";
 	for (int i = 0; i < 10; i++)
