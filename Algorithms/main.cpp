@@ -36,6 +36,40 @@ private:
 		return j;
 	}
 
+	void merge(int leftFirst, int leftLast, int rightFirst, int rightLast) {
+		int tempArraySize = rightLast - leftFirst + 1;
+		int *tempArray = new int[tempArraySize];
+		int saveFirst = leftFirst;
+		int index = 0;
+		// Comparing First Index Of Both Halfs Until One Of Them Finish
+		while ((leftFirst <= leftLast) && (rightFirst <= rightLast)) {
+			if (mArray[leftFirst] < mArray[rightFirst]) {
+				tempArray[index] = mArray[leftFirst];
+				leftFirst++;
+			}
+			else {
+				tempArray[index] = mArray[rightFirst];
+				rightFirst++;
+			}
+			index++;
+		}
+		// If Anything Remainig In Left Half Add It
+		while (leftFirst <= leftLast) {
+			tempArray[index] = mArray[leftFirst];
+			leftFirst++;
+			index++;
+		}
+		// If Anything Remainig In Right Half Add It
+		while (rightFirst <= rightLast) {
+			tempArray[index] = mArray[rightFirst];
+			rightFirst++;
+			index++;
+		}
+		// Move All Ordered Items To Main Array
+		for (int i = 0; i < tempArraySize; i++)
+			mArray[saveFirst + i] = tempArray[i];
+	}
+
 public:
 	CustomArray(int initialSize = 100) {
 		size = 0;
@@ -94,6 +128,15 @@ public:
 		}
 	}
 
+	void mergeSort(int first, int last) {
+		if (first < last) {
+			int mid = (first + last) / 2;
+			mergeSort(first, mid);
+			mergeSort(mid + 1, last);
+			merge(first, mid, mid + 1, last);
+		}
+	}
+
 };
 
 int main() {
@@ -107,7 +150,7 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.quickSort(0, 9);
+	customArray.mergeSort(0, 9);
 
 	cout << "\n\nRandom Array After Sorting:\n";
 	for (int i = 0; i < 10; i++)
