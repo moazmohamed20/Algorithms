@@ -217,6 +217,21 @@ public:
 		return -1;
 	}
 
+	int binarySearch(int value) {
+		int first = 0;
+		int last = size - 1;
+
+		while (first <= last) {
+			int mid = (first + last) / 2;
+
+			if (mArray[mid] == value)		return mid;
+			else if (mArray[mid] < value)	first = mid + 1;
+			else if (mArray[mid] > value)	last = mid - 1;
+		}
+
+		return -1;
+	}
+
 };
 
 int main() {
@@ -236,9 +251,8 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.createIndex(3);
-	cout << "\n\nNumber (25) At Index: " << customArray.indexedSearch(25);
-	cout << "\nNumber (34) At Index: " << customArray.indexedSearch(34);
+	cout << "\n\nNumber (25) At Index: " << customArray.binarySearch(25);
+	cout << "\nNumber (34) At Index: " << customArray.binarySearch(34);
 
 	getchar();
 	return 0;
