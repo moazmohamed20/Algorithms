@@ -70,6 +70,32 @@ private:
 			mArray[saveFirst + i] = tempArray[i];
 	}
 
+	void buildMaxHeap() {
+		for (int i = (size / 2) - 1; i >= 0; i--)
+			heapify(i, size - 1);
+	}
+
+	void heapify(int parent, int last) {
+		int checkChild = 2 * parent + 1;
+
+		while (checkChild <= last) {
+			// Focus On The Bigger Child Of Two
+			if (checkChild < last && mArray[checkChild] < mArray[checkChild + 1])
+				checkChild++;
+
+			// If Child Is Bigger Than Parent
+			if (mArray[checkChild] > mArray[parent]) {
+				// Make The Child The New Parent
+				swap(parent, checkChild);
+				parent = checkChild;
+				checkChild = 2 * parent + 1;
+			}
+			else {
+				break;
+			}
+		}
+	}
+
 public:
 	CustomArray(int initialSize = 100) {
 		size = 0;
@@ -137,6 +163,16 @@ public:
 		}
 	}
 
+	void heapSort() {
+		buildMaxHeap();
+		for (int i = size - 1; i > 0; i--) {
+			// Swap The Root With Last Leaf
+			swap(0, i);
+			// Heapify Without The Root
+			heapify(0, i - 1);
+		}
+	}
+
 };
 
 int main() {
@@ -150,7 +186,7 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	customArray.mergeSort(0, 9);
+	customArray.heapSort();
 
 	cout << "\n\nRandom Array After Sorting:\n";
 	for (int i = 0; i < 10; i++)
