@@ -173,6 +173,14 @@ public:
 		}
 	}
 
+
+	int sequentialSearch(int value) {
+		for (int i = 0; i < size; i++)
+			if (mArray[i] == value)
+				return i;
+		return -1;
+	}
+
 };
 
 int main() {
@@ -192,6 +200,8 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
+	cout << "\n\nNumber (25) At Index: " << customArray.sequentialSearch(25);
+	cout << "\nNumber (34) At Index: " << customArray.sequentialSearch(34);
 
 	getchar();
 	return 0;
