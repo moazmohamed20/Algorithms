@@ -60,13 +60,13 @@ private:
 			}
 			index++;
 		}
-		// If Anything Remainig In Left Half Add It
+		// If Anything Remaining In Left Half Add It
 		while (leftFirst <= leftLast) {
 			tempArray[index] = mArray[leftFirst];
 			leftFirst++;
 			index++;
 		}
-		// If Anything Remainig In Right Half Add It
+		// If Anything Remaining In Right Half Add It
 		while (rightFirst <= rightLast) {
 			tempArray[index] = mArray[rightFirst];
 			rightFirst++;
@@ -200,14 +200,14 @@ public:
 	int indexedSearch(int value) {
 		// Find Where The Value Is Grouped
 		int i = 0;
-		while (value > mIndex[i].value && i < indexSize)
+		while (i < indexSize && value > mIndex[i].value)
 			i++;
 
 		// Set Search Range: End
 		int lastIndex = 0;
-		if (value == mIndex[i].value)		return mIndex[i].index;
+		if (i == indexSize)					lastIndex = size;
 		else if (value < mIndex[i].value)	lastIndex = mIndex[i].index;
-		else if (value > mIndex[i].value)	lastIndex = indexSize;
+		else if (value == mIndex[i].value)	return mIndex[i].index;
 
 		//  Search For The Value In The Range
 		for (int j = mIndex[i - 1].index; j < lastIndex; j++)
@@ -251,8 +251,8 @@ int main() {
 	for (int i = 0; i < 10; i++)
 		cout << customArray.get(i) << "\t";
 
-	cout << "\n\nNumber (25) At Index: " << customArray.binarySearch(25);
-	cout << "\nNumber (34) At Index: " << customArray.binarySearch(34);
+	cout << "\n\nNumber (25) At Index: " << customArray.indexedSearch(25);
+	cout << "\nNumber (34) At Index: " << customArray.indexedSearch(34);
 
 	getchar();
 	return 0;
